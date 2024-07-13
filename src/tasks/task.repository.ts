@@ -1,5 +1,14 @@
-import { Repository, EntityRepository } from 'typeorm';
+import { Repository, DataSource } from 'typeorm';
 import { Task } from './task.entity';
+import { Injectable } from '@nestjs/common';
 
-@EntityRepository(Task)
-export class TasksRepository extends Repository<Task> {}
+@Injectable()
+export class TasksRepository extends Repository<Task> {
+  constructor(private dataSource: DataSource) {
+    super(Task, dataSource.createEntityManager());
+  }
+
+  async getById(id: number): Promise<Task> {
+    return this.findOne({ where: { id } });
+  }
+}

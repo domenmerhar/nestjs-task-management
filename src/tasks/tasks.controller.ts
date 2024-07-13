@@ -29,6 +29,11 @@ export class TasksController {
   //   return this.tasksService.getAllTasks();
   // }
 
+  @Get('/:id')
+  async getTaskById(@Param('id') id: number): Promise<Task> {
+    return this.tasksService.getTaskById(id);
+  }
+
   // @Get('/:id')
   // getTaskById(@Param('id', ParseIntPipe) id: number) {
   //   return this.tasksService.getTaskById(id);
