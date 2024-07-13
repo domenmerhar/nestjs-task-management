@@ -11,7 +11,7 @@ export class TasksRepository extends Repository<Task> {
     super(Task, dataSource.createEntityManager());
   }
 
-  async getById(id: number): Promise<Task> {
+  async getTaskById(id: string): Promise<Task> {
     return this.findOne({ where: { id } });
   }
 
@@ -35,5 +35,14 @@ export class TasksRepository extends Repository<Task> {
 
     if (result.affected === 0)
       throw new NotFoundException(`Task with the ID ${id} was not found.`);
+  }
+
+  async updateTask(id: string, status: TaskStatus): Promise<Task> {
+    const task = await this.getTaskById(id);
+    task.status = status;
+
+    await this.save(task);
+
+    return task;
   }
 }

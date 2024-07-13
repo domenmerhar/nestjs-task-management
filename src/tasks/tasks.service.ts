@@ -3,13 +3,14 @@ import { TasksRepository } from './task.repository';
 import { Task } from './task.entity';
 import { CreateTaskDto } from '../../../test/src/task/dto/create-task.dto';
 import { DeleteTaskDto } from './dto/delete-task.dto';
+import { TaskStatus } from './task.status.enum';
 
 @Injectable()
 export class TasksService {
   constructor(private readonly tasksRepository: TasksRepository) {}
 
-  async getTaskById(id: number): Promise<Task> {
-    const found = await this.tasksRepository.getById(id);
+  async getTaskById(id: string): Promise<Task> {
+    const found = await this.tasksRepository.getTaskById(id);
 
     if (!found) throw new NotFoundException(`Task with ID "${id}" not found`);
 
@@ -24,15 +25,7 @@ export class TasksService {
     return this.tasksRepository.deleteTask(deleteTaskDto);
   }
 
-  // constructor(
-  //   @InjectRepository(TaskRepository)
-  //   private taskRepository: TaskRepository,
-  // ) {}
-  // async getTaskById(id: number) {
-  //   const found = await this.taskRepository.find();
-  //   if (!found) {
-  //     throw new NotFoundException(`Task with ID "${id}" not found`);
-  //   }
-  //   return found;
-  // }
+  updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
+    return this.tasksRepository.updateTask(id, status);
+  }
 }

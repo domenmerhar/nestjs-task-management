@@ -2,5 +2,5 @@ import { IsNotEmpty } from 'class-validator';
 
 export class DeleteTaskDto {
   @IsNotEmpty()
-  id: number;
+  id: string;
 }
