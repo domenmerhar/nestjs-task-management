@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { TasksRepository } from './task.repository';
 import { Task } from './task.entity';
 import { CreateTaskDto } from '../../../test/src/task/dto/create-task.dto';
+import { DeleteTaskDto } from './dto/delete-task.dto';
 
 @Injectable()
 export class TasksService {
@@ -17,6 +18,10 @@ export class TasksService {
 
   createTask(createTaskDto: CreateTaskDto): Promise<Task> {
     return this.tasksRepository.createTask(createTaskDto);
+  }
+
+  deleteTask(deleteTaskDto: DeleteTaskDto): Promise<void> {
+    return this.tasksRepository.deleteTask(deleteTaskDto);
   }
 
   // constructor(
