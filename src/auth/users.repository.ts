@@ -55,4 +55,8 @@ export class UsersRepository extends Repository<UserEntity> {
     } else
       throw new UnauthorizedException('Please check your login credentials');
   }
+
+  getRepository(): this {
+    return this;
+  }
 }
