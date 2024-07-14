@@ -2,6 +2,7 @@ import {
   ConflictException,
   Injectable,
   InternalServerErrorException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { Repository, DataSource } from 'typeorm';
 import { UserEntity } from './user.entity';
@@ -32,5 +33,16 @@ export class UsersRepository extends Repository<UserEntity> {
         throw new ConflictException(`Username already exists`);
       else throw new InternalServerErrorException();
     }
+  }
+
+  async sigIn(authCredentialsDto: AuthCredentialsDto): Promise<string> {
+    const { username, password } = authCredentialsDto;
+
+    const user = await this.findOneBy({ username });
+
+    if (user && (await bcrypt.compare(password, user.password))) {
+      return 'success';
+    } else
+      throw new UnauthorizedException('Please check your login credentials');
   }
 }
