@@ -5,6 +5,7 @@ import { CreateTaskDto } from '../../../test/src/task/dto/create-task.dto';
 import { DeleteTaskDto } from './dto/delete-task.dto';
 import { TaskStatus } from './task.status.enum';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
+import { UserEntity } from 'src/auth/user.entity';
 
 @Injectable()
 export class TasksService {
@@ -22,8 +23,8 @@ export class TasksService {
     return found;
   }
 
-  createTask(createTaskDto: CreateTaskDto): Promise<Task> {
-    return this.tasksRepository.createTask(createTaskDto);
+  createTask(createTaskDto: CreateTaskDto, user: UserEntity): Promise<Task> {
+    return this.tasksRepository.createTask(createTaskDto, user);
   }
 
   deleteTask(deleteTaskDto: DeleteTaskDto): Promise<void> {
