@@ -55,8 +55,11 @@ export class TasksController {
 
   @Delete('/:id')
   @UsePipes(ValidationPipe)
-  deleteTask(@Param() deleteTaskDto: DeleteTaskDto): Promise<void> {
-    return this.tasksService.deleteTask(deleteTaskDto);
+  deleteTask(
+    @Param() deleteTaskDto: DeleteTaskDto,
+    @GetUser() user: UserEntity,
+  ): Promise<void> {
+    return this.tasksService.deleteTask(deleteTaskDto, user);
   }
 
   @Patch(':id/status')
