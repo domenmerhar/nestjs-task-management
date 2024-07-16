@@ -9,6 +9,7 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
   app.useGlobalInterceptors(new TransformInterceptor());
+  app.enableCors();
   //app.useLogger(app.get(LoggerPino));
 
   const port = 3000;
